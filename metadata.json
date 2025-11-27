@@ -1,0 +1,5 @@
+{
+  "name": "SocialFlow AI",
+  "description": "An AI-powered social media automation and scheduling dashboard. Generate, edit, and schedule posts across multiple platforms using Gemini.",
+  "requestFramePermissions": []
+}
