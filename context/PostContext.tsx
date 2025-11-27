@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
-import { SocialPost, Platform, PostStatus } from '../types';
+import { SocialPost, Platform, PostStatus, ConnectedAccount } from '../types';
 import { addDays, setHours, setMinutes } from 'date-fns';
 
 interface PostContextType {
   posts: SocialPost[];
+  accounts: ConnectedAccount[];
   addPost: (post: SocialPost) => void;
   updatePost: (id: string, updates: Partial<SocialPost>) => void;
   deletePost: (id: string) => void;
   getPostsByDate: (date: Date) => SocialPost[];
+  connectAccount: (platform: Platform, username: string) => void;
+  disconnectAccount: (platform: Platform) => void;
 }
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
@@ -41,8 +44,16 @@ const initialPosts: SocialPost[] = [
   }
 ];
 
+const initialAccounts: ConnectedAccount[] = [
+  { platform: Platform.Twitter, isConnected: false },
+  { platform: Platform.LinkedIn, isConnected: false },
+  { platform: Platform.Facebook, isConnected: false },
+  { platform: Platform.Instagram, isConnected: false },
+];
+
 export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [posts, setPosts] = useState<SocialPost[]>(initialPosts);
+  const [accounts, setAccounts] = useState<ConnectedAccount[]>(initialAccounts);
 
   const addPost = useCallback((post: SocialPost) => {
     setPosts(prev => [...prev, post]);
@@ -64,8 +75,24 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     );
   }, [posts]);
 
+  const connectAccount = useCallback((platform: Platform, username: string) => {
+    setAccounts(prev => prev.map(acc => 
+      acc.platform === platform 
+        ? { ...acc, isConnected: true, username } 
+        : acc
+    ));
+  }, []);
+
+  const disconnectAccount = useCallback((platform: Platform) => {
+    setAccounts(prev => prev.map(acc => 
+      acc.platform === platform 
+        ? { ...acc, isConnected: false, username: undefined } 
+        : acc
+    ));
+  }, []);
+
   return (
-    <PostContext.Provider value={{ posts, addPost, updatePost, deletePost, getPostsByDate }}>
+    <PostContext.Provider value={{ posts, accounts, addPost, updatePost, deletePost, getPostsByDate, connectAccount, disconnectAccount }}>
       {children}
     </PostContext.Provider>
   );

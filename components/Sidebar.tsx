@@ -42,7 +42,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
       </div>
 
       <div className="mt-auto p-6 border-t border-slate-800">
-        <button className="flex items-center space-x-3 text-slate-400 hover:text-white transition-colors w-full px-4 py-2">
+        <button 
+          onClick={() => setActiveTab('settings')}
+          className={`flex items-center space-x-3 transition-colors w-full px-4 py-2 rounded-lg ${
+            activeTab === 'settings' 
+            ? 'bg-indigo-600 text-white' 
+            : 'text-slate-400 hover:text-white'
+          }`}
+        >
           <Settings size={20} />
           <span>Settings</span>
         </button>

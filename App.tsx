@@ -4,6 +4,7 @@ import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './components/Dashboard';
 import { CreatePost } from './components/CreatePost';
 import { CalendarView } from './components/Calendar';
+import { Settings } from './components/Settings';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -16,6 +17,8 @@ const App: React.FC = () => {
         return <CreatePost />;
       case 'calendar':
         return <CalendarView />;
+      case 'settings':
+        return <Settings />;
       default:
         return <Dashboard />;
     }

@@ -21,6 +21,13 @@ export interface SocialPost {
   imageUrl?: string; // Optional placeholder image
 }
 
+export interface ConnectedAccount {
+  platform: Platform;
+  isConnected: boolean;
+  username?: string;
+  avatarUrl?: string;
+}
+
 export interface GeneratePostParams {
   topic: string;
   platform: Platform;

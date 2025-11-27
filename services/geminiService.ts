@@ -35,7 +35,7 @@ export const generateAutoSchedule = async (
 ): Promise<Partial<SocialPost>[]> => {
   try {
     const prompt = `Generate ${count} distinct social media posts about "${topic}". 
-    Vary the platforms (mix of Twitter, LinkedIn, Instagram) and the content style.
+    Vary the platforms (mix of Twitter, LinkedIn, Instagram, Facebook) and the content style.
     Return a raw JSON array.`;
 
     const response = await ai.models.generateContent({
